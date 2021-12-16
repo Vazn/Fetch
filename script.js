@@ -3,40 +3,81 @@ const submitButton = document.querySelector("#submit");
 
 //== Fetch any API and return data //== Full Error handling ? ==//
 async function fetchApi() {
-   const url = buildUrl();
+   let response;
+   let data;
    try {
-      const response = await fetch(url);
+      const url = buildUrl();
+      if (url === "") throw new Error("Can't fetch API with empty URL");
+   }
+   catch (e) {
+      console.error(e);
+      return {};
+   }
+   try {
+      response = await fetch(url);
       if (response.ok) {
-         let data = await response.json();
-         return data;
+         try {
+            data = await response.json();
+            if (Object.keys(data)[0] === "errors") {  //== If response.json() returns an array of errors
+               throw new Error("Parsing to JSON returned errors: ");
+            }
+            return data;
+         }
+         catch (e){
+            console.error(`${e}\nErrors :`, data.errors);
+            alert(data.errors[0].description);
+            return {};
+         }
       }
       else {
-         alert("Impossible de communiquer avec l'API !");
-         throw new Error(`Weather API returned an error : code ${response.status}`);
+         throw new Error("Cannot communicate with the weather service !") //== Case when code is not 20X
       }
    }
    catch (e) {
-      alert("Rentrez une ville qui existe ou qui n'est pas un bled paumé de 150 habitants svp !")
-      throw new Error("Can't fetch data from API", e);
+      alert(e);
+      console.error(`Weather API returned an error : code ${response.status}`);
+      return {};
    } 
 }
 //== Throw result data in a pipeline of functions :))
 async function dataProcessing(...fn) {
-   const data = await fetchApi();
-   
    const pipe = (x) => (...functions) => functions.reduce((v, f) => f(v), x);
-   pipe(data)(
-      ...fn
-   );
+
+   try {
+      const data = await fetchApi();
+      if (JSON.stringify(data) === "{}") {  //== If fetch returns an empty object
+         throw new Error("API fetch failed / No data found !");
+      }
+   }
+   catch (e){
+      console.error(e);
+      return 0;
+   }
+   try {
+      pipe(data)(
+         ...fn
+      );
+   }
+   catch (e) {
+      console.error(e);
+      return 0;
+   }
    return 1;
 }  
 //== Build url for the request
 function buildUrl() {
-   const input = document.querySelector("#cityField").value;
-   const apiRoot = "https://www.prevision-meteo.ch/services/json/";
-   const url = `${apiRoot}${input}`;
-   if (url === undefined) throw new Error("Unable to build the URL !");
-   return url;
+   try {
+      const input = document.querySelector("#cityField").value;
+      const apiRoot = "https://www.prevision-meteo.ch/services/json/";
+      const url = `${apiRoot}${input}`;
+      if (input === "") throw new Error("Unable to build the URL !\n");
+      return url;
+   }
+   catch (e) {
+      alert(e + "Enter a valid city name/coordinates");
+      console.error(e);
+      return "";
+   }
 }
 //== Process data and pick only what we want
 function getWantedData(data) {            
