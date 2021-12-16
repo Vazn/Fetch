@@ -12,11 +12,12 @@ async function requestApi(...fn) {
       try {
          const response = await fetch(url);
          if (response.ok) {
-            let data = await response.json();
-      
+            let data = await response.json();   
             pipe(data)(
                ...fn
             );
+
+            return 1;
          }
          else {
             alert("Impossible de communiquer avec l'API !");
@@ -125,6 +126,7 @@ function displayData(data) {              //== TODO: Some refactor
       }
       i++;
    }
+   return 1;
 }
 (function htmlAndSomeStyle() {                            //== Style
    const headerAndForm = document.querySelector("header");
