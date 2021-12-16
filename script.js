@@ -92,7 +92,8 @@ function displayData(data) {              //== TODO: Some refactor
       dynamicElementsContainer.appendChild(dayContainer);
       dayContainer.appendChild(jourP);
       dayContainer.appendChild(iconP);
-      if (i === 0) {                                              // Filter <today only data>
+      if (i === 0) {    
+         jourP.textContent = `Aujourd'hui`;         // Filter <today only data>
          tempP.textContent = `Température actuelle : ${tmp}°C`;
          dayContainer.appendChild(tempP);
       }
