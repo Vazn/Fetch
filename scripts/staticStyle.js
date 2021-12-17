@@ -23,13 +23,14 @@ function createAndStyleElements(tag, textContent = "", attributes = [], styleObj
 
 //== Initial style of static elements
 function initialStyle() {                            
+   const body = document.querySelector("body");
    const headerAndForm = document.querySelector("header");
    const main = document.querySelector("main");
    const mainTitle = document.querySelector("h1");
    const inputs = document.querySelectorAll("input");
    const formLabel = document.querySelector("label");
 
-   styleElements(document.body, {
+   styleElements(body, {
       display : "grid",
       gridTemplateColumns : "repeat(12, 1fr)",
       justifyContent : "center",

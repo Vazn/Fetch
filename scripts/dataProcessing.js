@@ -47,14 +47,6 @@ function displayData(data) {
    let day = 0;
    for (let obj in data) {
       const currentDay = `fcst_day_${day}`;
-      
-      const hoursContainer = createAndStyleElements("section", "", [], {});
-      const dayContainer = createAndStyleElements("article", "", [], {
-         margin: "25px",
-         padding: "5px",
-         border: "1px solid black"
-      });
-
       const {
          day_long,
          tmp,
@@ -64,16 +56,35 @@ function displayData(data) {
          icon_big
       } = data[obj];
       
-      const jourP = createAndStyleElements("h2", `${day_long}`, {
-         fontSize : "50px",
-         fontFamily : "Marck Script",
-         margin : "15px 0px 15px 0px"
+      const hoursContainer = createAndStyleElements("section", "", [], {
+         margin: "15px 0px 0px 0px",
       });
-      const conditionP = createAndStyleElements("p", `Condition météorologiques : ${condition}`, [], {});
-      const tempP = createAndStyleElements("p", "", [], {});
-      const tminP = createAndStyleElements("p", `Température minimale : ${tmin}°C`, [], {});
-      const tmaxP = createAndStyleElements("p", `Température maximale : ${tmax}°C`, [], {});
-      const iconP = createAndStyleElements("img", "", [["src", icon_big]], {});
+      const dayContainer = createAndStyleElements("article", "", [], {
+         display: "flex",
+         alignItems: "center",
+         flexDirection: "column",
+         margin: "25px",
+         padding: "5px 15px 15px 15px",
+         border: "2px solid black",
+      });
+
+      const jourP = createAndStyleElements("h2", `${day_long}`, [], {
+         fontSize: "50px",
+         fontFamily: "Marck Script",
+         margin: "15px 0px 15px 0px"
+      });
+      const iconP = createAndStyleElements("img", "", [["src", icon_big]], {
+         width: "175px"
+      });
+
+      const dataStyle = {
+         fontSize: "1.2rem",
+         margin: "0px 0px 10px 0px", 
+      }
+      const conditionP = createAndStyleElements("p", `Condition météorologiques : ${condition}`, [], dataStyle);
+      const tempP = createAndStyleElements("p", "", [], dataStyle);
+      const tminP = createAndStyleElements("p", `Température minimale : ${tmin}°C`, [], dataStyle);
+      const tmaxP = createAndStyleElements("p", `Température maximale : ${tmax}°C`, [], dataStyle);
 
       dynamicElementsContainer.appendChild(dayContainer);
       dayContainer.appendChild(jourP);
@@ -94,17 +105,34 @@ function displayData(data) {
             CONDITION
          } = data[currentDay].hourly_data[currentHour];
          
-         const individualHoursContainer = createAndStyleElements("div", "", [], {});
-         const hoursDataTitle = createAndStyleElements("span", `${currentHour} : `, [], {});
-         const hoursDataCondition = createAndStyleElements("span", `${CONDITION}`, [], {});
-         const hoursDataIcon = createAndStyleElements("img", "", [["src", ICON]], {
-            display: "inline"
+         const individualHoursContainer = createAndStyleElements("div", "", [], {
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            borderRadius: "5px",
+            margin: "0px 0px 10px 0px",
+            padding: "5px",
+            width: "200px",
+            // backgroundColor: "#bbbbee"
+            backgroundColor: "#eeeeff"
          });
+         const hoursDataIcon = createAndStyleElements("img", "", [["src", ICON]], {
+            display: "block",
+            width: "75px",
+            textAlign: "center"
+         });
+
+         const hoursTextStyle = {
+            fontSize: "1.1rem",
+            margin: "5px 0px 0px 0px"
+         }
+         const hoursDataTitle = createAndStyleElements("span", `${currentHour} : `, [], hoursTextStyle);
+         const hoursDataCondition = createAndStyleElements("span", `${CONDITION}`, [], hoursTextStyle);
                   
          dayContainer.appendChild(hoursContainer);
          hoursContainer.appendChild(individualHoursContainer);
-         individualHoursContainer.appendChild(hoursDataTitle);
          individualHoursContainer.appendChild(hoursDataIcon);
+         individualHoursContainer.appendChild(hoursDataTitle);
          individualHoursContainer.appendChild(hoursDataCondition);
       }
       day++;
