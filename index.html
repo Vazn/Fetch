@@ -4,28 +4,40 @@
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="stylesheet" href="style.css">
-      <title>Meteo</title>
       <script src="./scripts/fetch.js" type="text/javascript" defer></script>
       <script src="./scripts/dataProcessing.js" type="text/javascript" defer></script>
-      <script src="./scripts/staticStyle.js" type="text/javascript" defer></script>
       <script src="./main.js" type="text/javascript" defer></script>
-
+      
       <link rel="stylesheet" href="style.css">
-
+      
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
       <link href="https://fonts.googleapis.com/css2?family=Marck+Script&display=swap" rel="stylesheet">
+      <title>Meteo</title>
    </head>
 
    <body>
       <header>
          <h1>Meteo</h1>
          <form>
-            <label for="city">Ville : </label>
-            <input id="cityField" type="text" name="city">
+            <fieldset>
+               <legend> Ville :</legend>
+               <input id="cityField" type="text" name="city">
+            </fieldset>
+
+            <fieldset>
+               <legend> Options heure par heure :</legend>
+
+               <label for="wind">Données sur le vent</label>
+               <input type="checkbox" name="wind">
+               <label for="rain">Données sur la neige</label>
+               <input type="checkbox" name="rain">
+               <label for="snow">Pression atmosphérique</label>
+               <input type="checkbox" name="snow">
+            </fieldset>
 
             <input id="submit" type="submit" value="Envoyer">
+            <input id="hourlyTrigger" type="button" value="Heure par heure">
          </form>
       </header>
 

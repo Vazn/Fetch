@@ -43,7 +43,12 @@ function getWantedData(data) {
    return wantedData;
 }
 //== Second processing function that display data
-function displayData(data) {              
+function displayData(data) {       
+   
+   //== An array of options that filters displayed elements
+   const formOptions = document.querySelectorAll('input[type=checkbox]'); 
+   hourlyTrigger.style.display = "block";
+
    let day = 0;
    for (let obj in data) {
       const currentDay = `fcst_day_${day}`;
@@ -53,11 +58,14 @@ function displayData(data) {
          tmin,
          tmax,
          condition,
-         icon_big
+         icon_big,
+         wnd_dir,
+         wnd_spd,
       } = data[obj];
       
       const hoursContainer = createAndStyleElements("section", "", [], {
          margin: "15px 0px 0px 0px",
+         display: "none",
       });
       const dayContainer = createAndStyleElements("article", "", [], {
          display: "flex",
@@ -85,6 +93,7 @@ function displayData(data) {
       const tempP = createAndStyleElements("p", "", [], dataStyle);
       const tminP = createAndStyleElements("p", `Température minimale : ${tmin}°C`, [], dataStyle);
       const tmaxP = createAndStyleElements("p", `Température maximale : ${tmax}°C`, [], dataStyle);
+      const windP = createAndStyleElements("p", `Vent : ${wnd_spd} km/h - ${wnd_dir}`, [], dataStyle);
 
       dynamicElementsContainer.appendChild(dayContainer);
       dayContainer.appendChild(jourP);
@@ -93,16 +102,22 @@ function displayData(data) {
          jourP.textContent = `Aujourd'hui`;         
          tempP.textContent = `Température actuelle : ${tmp}°C`;
          dayContainer.appendChild(tempP);
+         dayContainer.appendChild(windP);
+      } else {
+         dayContainer.appendChild(tminP);
+         dayContainer.appendChild(tmaxP);
       }
-      dayContainer.appendChild(tminP);
-      dayContainer.appendChild(tmaxP);
       dayContainer.appendChild(conditionP);
+      dayContainer.appendChild(hoursContainer);
       
       for (let j=0 ; j<24 ; j++) { 
          let currentHour = `${j}H00`;  
          const {  
             ICON,
-            CONDITION
+            CONDITION,
+            ISSNOW,
+            PRMSL,               // HPA
+            WNDDIRCARD10,      
          } = data[currentDay].hourly_data[currentHour];
          
          const individualHoursContainer = createAndStyleElements("div", "", [], {
@@ -128,14 +143,38 @@ function displayData(data) {
          }
          const hoursDataTitle = createAndStyleElements("span", `${currentHour} : `, [], hoursTextStyle);
          const hoursDataCondition = createAndStyleElements("span", `${CONDITION}`, [], hoursTextStyle);
-                  
-         dayContainer.appendChild(hoursContainer);
+         const windDirection = createAndStyleElements("span", `Direction du vent : ${WNDDIRCARD10}`, [], hoursTextStyle);            
+         const snowAmount = createAndStyleElements("span", `Neige : ${ISSNOW}`, [], hoursTextStyle);
+         const atmPressure = createAndStyleElements("span", `Pression atmospherique : ${PRMSL}`, [], hoursTextStyle);
+
          hoursContainer.appendChild(individualHoursContainer);
          individualHoursContainer.appendChild(hoursDataIcon);
          individualHoursContainer.appendChild(hoursDataTitle);
          individualHoursContainer.appendChild(hoursDataCondition);
+         if (formOptions[0].checked === true) individualHoursContainer.appendChild(windDirection);
+         if (formOptions[1].checked === true) individualHoursContainer.appendChild(snowAmount);
+         if (formOptions[2].checked === true) individualHoursContainer.appendChild(atmPressure);
       }
       day++;
    }
    return 1;
+}
+
+//== Helper functions
+function createAndStyleElements(tag, textContent = "", attributes = [], styleObj = {}) {
+   let element = document.createElement(tag);
+   if (textContent !== "") {
+      element.textContent = textContent;
+   }
+   if (attributes.length > 0) {
+      for (let i=0 ; i<attributes.length ; i++) {
+         element.setAttribute(attributes[i][0], attributes[i][1]);
+      }
+   }
+   if (JSON.stringify(styleObj) !== "{}") {
+      for (styleProperty in styleObj) {
+         element.style[styleProperty] = styleObj[styleProperty];
+      }
+   }   
+   return element;
 }
