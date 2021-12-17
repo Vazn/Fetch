@@ -1,20 +1,21 @@
+const apiRoot = "https://www.prevision-meteo.ch/services/json/";
 const dynamicElementsContainer = document.querySelector("main");
 const submitButton = document.querySelector("#submit");
+
+//== Build url for the request // Errors OK 
+function buildUrl() {
+      const input = document.querySelector("#cityField").value;
+      const url = `${apiRoot}${input}`;
+      return url;
+}
 
 //== Fetch any API and return data //== Full Error handling ? ==//
 async function fetchApi() {
    let response;
    let data;
+
    try {
-      const url = buildUrl();
-      if (url === "") throw new Error("Can't fetch API with empty URL");
-   }
-   catch (e) {
-      console.error(e);
-      return {};
-   }
-   try {
-      response = await fetch(url);
+      response = await fetch(buildUrl());
       if (response.ok) {
          try {
             data = await response.json();
@@ -22,8 +23,7 @@ async function fetchApi() {
                throw new Error("Parsing to JSON returned errors: ");
             }
             return data;
-         }
-         catch (e){
+         } catch (e) {
             console.error(`${e}\nErrors :`, data.errors);
             alert(data.errors[0].description);
             return {};
@@ -32,53 +32,40 @@ async function fetchApi() {
       else {
          throw new Error("Cannot communicate with the weather service !") //== Case when code is not 20X
       }
-   }
-   catch (e) {
+   } catch (e) {
       alert(e);
       console.error(`Weather API returned an error : code ${response.status}`);
       return {};
    } 
 }
+
 //== Throw result data in a pipeline of functions :))
 async function dataProcessing(...fn) {
+
+   const data = await fetchApi();
    const pipe = (x) => (...functions) => functions.reduce((v, f) => f(v), x);
 
    try {
-      const data = await fetchApi();
       if (JSON.stringify(data) === "{}") {  //== If fetch returns an empty object
          throw new Error("API fetch failed / No data found !");
       }
-   }
-   catch (e){
+   } catch (e){
       console.error(e);
       return 0;
    }
+
    try {
       pipe(data)(
          ...fn
       );
-   }
-   catch (e) {
+   } catch (e) {
       console.error(e);
       return 0;
    }
+
    return 1;
 }  
-//== Build url for the request
-function buildUrl() {
-   try {
-      const input = document.querySelector("#cityField").value;
-      const apiRoot = "https://www.prevision-meteo.ch/services/json/";
-      const url = `${apiRoot}${input}`;
-      if (input === "") throw new Error("Unable to build the URL !\n");
-      return url;
-   }
-   catch (e) {
-      alert(e + "Enter a valid city name/coordinates");
-      console.error(e);
-      return "";
-   }
-}
+
 //== Process data and pick only what we want
 function getWantedData(data) {            
 
