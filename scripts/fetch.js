@@ -1,8 +1,8 @@
 //== Build url for the request //== Full Error handling ==//
 function buildUrl() {
    const apiRoot = "https://www.prevision-meteo.ch/services/json/";
-   const input = document.querySelector("#cityField").value;
-   const url = `${apiRoot}${input}`;
+   const cityInput = document.querySelector("#cityField").value;
+   const url = `${apiRoot}${cityInput}`;
    return url;
 }
 //== Fetch any API and return data //== Full Error handling ==//

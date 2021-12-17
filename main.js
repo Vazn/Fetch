@@ -2,14 +2,14 @@ const dynamicElementsContainer = document.querySelector("main");
 function dynamicDataEvents() {
    const form = document.querySelector("form");
 
-   const hourlyTrigger = document.querySelector("#hourlyTrigger");
+   const hourlyTrigger = document.querySelector("input[type=button]");
    let hourlyTriggerClicked = true;
    
    //== Main trigger
    form.addEventListener("submit", (e) => {
       e.preventDefault();
       dynamicElementsContainer.innerHTML = "";
-   
+      
       //== Build URL -> Fetch API -> Process data into an array of functions
       dataProcessing(getWantedData, displayData); 
    });  
@@ -31,7 +31,6 @@ function dynamicDataEvents() {
          hourlyTriggerClicked = true;
       }
    })
-
 }
 
 //======================//=========================================//=========================//

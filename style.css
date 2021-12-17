@@ -23,23 +23,40 @@ form {
    align-items: center;
 }
 fieldset {
-   width: 800px;
+   width: 45vw;
    padding: 10px;
    margin-bottom: 10px;
+}
+
+fieldset:nth-child(2) {
+   min-width: 450px;
+   justify-content: space-evenly;
+   align-items: center;
+   
+   display: flex;
 }
 legend {
    font-size: 1.5rem;
 }
 label {
    font-size : 20px;
+   margin-right: 10px;
 }
 header {
    grid-column : 1 /span 12;
    text-align : center;
 }
 input {
-   padding: 15px;
+   cursor: pointer;
+   border-radius: 2px;
+   padding: 15px 15px 15px 15px;
+   margin-bottom: 10px;
    font-size: 20px;
+   background-color: #eeeeff;
+}
+input[type="checkbox"] {
+   transform: scale(1.2);
+   margin-bottom: 0px;
 }
 input[type="submit"] {
    width: 150px;
@@ -47,9 +64,6 @@ input[type="submit"] {
 }
 input[type="button"] {
    display: none;
-}
-input[type="checkbox"] {
-   margin-right: 35px;
 }
 
 main {
@@ -59,4 +73,12 @@ main {
    flex-direction : row;
    justify-content : space-evenly;
    text-align : center;
+}
+
+input[type="submit"]:hover, input[type="button"]:hover {
+   background-color: #adadd3;
+   color: #eeeeff;
+}
+input[type="text"]:hover{
+   background-color: #adadd3;
 }

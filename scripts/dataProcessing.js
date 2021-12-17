@@ -46,8 +46,12 @@ function getWantedData(data) {
 function displayData(data) {       
    
    //== An array of options that filters displayed elements
-   const formOptions = document.querySelectorAll('input[type=checkbox]'); 
+   const formOptions = document.querySelectorAll("input[type=checkbox]"); 
+   const cityFieldset = document.querySelector("fieldset:nth-child(1)");
+   const submitButton = document.querySelector("input[type=submit]");
    hourlyTrigger.style.display = "block";
+   cityFieldset.style.display = "none";
+   submitButton.value = "Refresh";
 
    let day = 0;
    for (let obj in data) {

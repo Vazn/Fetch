@@ -13,31 +13,31 @@
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
       <link href="https://fonts.googleapis.com/css2?family=Marck+Script&display=swap" rel="stylesheet">
-      <title>Meteo</title>
+      <title>Weather</title>
    </head>
 
    <body>
       <header>
-         <h1>Meteo</h1>
+         <h1>Weather</h1>
          <form>
             <fieldset>
-               <legend> Ville :</legend>
+               <legend> City :</legend>
                <input id="cityField" type="text" name="city">
             </fieldset>
 
             <fieldset>
-               <legend> Options heure par heure :</legend>
+               <legend> Hourly data options :</legend>
 
-               <label for="wind">Données sur le vent</label>
+               <label for="wind">Wind data</label>
                <input type="checkbox" name="wind">
-               <label for="rain">Données sur la neige</label>
+               <label for="rain">Snow data</label>
                <input type="checkbox" name="rain">
-               <label for="snow">Pression atmosphérique</label>
+               <label for="snow">Atm. pressure</label>
                <input type="checkbox" name="snow">
             </fieldset>
 
-            <input id="submit" type="submit" value="Envoyer">
-            <input id="hourlyTrigger" type="button" value="Heure par heure">
+            <input type="submit" value="Submit">
+            <input id="hourlyTrigger" type="button" value="Hourly data">
          </form>
       </header>
 
