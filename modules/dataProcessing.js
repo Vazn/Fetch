@@ -45,6 +45,7 @@ function getWantedData(data) {
 //== Second processing function that display data
 function displayData(data) {       
    
+   const sections = Array.from(document.querySelectorAll("section"));
    //== An array of options that filters displayed elements
    const formOptions = document.querySelectorAll("input[type=checkbox]"); 
    const cityFieldset = document.querySelector("fieldset:nth-child(1)");
@@ -68,11 +69,14 @@ function displayData(data) {
          wnd_dir,
          wnd_spd,
       } = data[obj];
-      
+
       const hoursContainer = createAndStyleElements("section", "", [], {
          margin: "15px 0px 0px 0px",
          display: "none",
       });
+      if (hourlyDisplayed == true) {
+         hoursContainer.style.display = "block";
+      }
       const dayContainer = createAndStyleElements("article", "", [], {
          display: "flex",
          alignItems: "center",
