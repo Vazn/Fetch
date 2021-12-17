@@ -1,7 +1,8 @@
 const dynamicElementsContainer = document.querySelector("main");
-const submitButton = document.querySelector("#submit");
 
 function dynamicDataEvent() {
+   const submitButton = document.querySelector("#submit");
+
    submitButton.addEventListener("click", (e) => {
       e.preventDefault();
       dynamicElementsContainer.innerHTML = "";
@@ -14,6 +15,7 @@ function dynamicDataEvent() {
 //======================//=========================================//=========================//
 
 (function main() {
+
    try {
       initialStyle();
       dynamicDataEvent();
