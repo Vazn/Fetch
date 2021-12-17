@@ -23,7 +23,7 @@ async function fetchApi() {
                throw new Error("Parsing to JSON returned errors: ");
             }
             return data;
-         } catch (e) {
+         } catch (e){
             console.error(`${e}\nErrors :`, data.errors);
             alert(data.errors[0].description);
             return {};
