@@ -49,9 +49,11 @@ function displayData(data) {
    const formOptions = document.querySelectorAll("input[type=checkbox]"); 
    const cityFieldset = document.querySelector("fieldset:nth-child(1)");
    const submitButton = document.querySelector("input[type=submit]");
+   const homeButton = document.querySelector("header > a");
    hourlyTrigger.style.display = "block";
    cityFieldset.style.display = "none";
    submitButton.value = "Refresh";
+   homeButton.style.display = "block";
 
    let day = 0;
    for (let obj in data) {

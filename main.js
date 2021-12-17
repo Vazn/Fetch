@@ -9,6 +9,7 @@ function dynamicDataEvents() {
    form.addEventListener("submit", (e) => {
       e.preventDefault();
       dynamicElementsContainer.innerHTML = "";
+      hourlyTriggerClicked = true;
       
       //== Build URL -> Fetch API -> Process data into an array of functions
       dataProcessing(getWantedData, displayData); 

@@ -4,11 +4,22 @@
 }
 
 body {
+   width: 100vw;
    display : grid;
    grid-template-columns : repeat(12, 1fr);
    justify-content : center;
    justify-items : center;
    background-color : #ddddff;
+}
+header > a {
+   display : none; 
+}
+header > img {
+   cursor: pointer;
+   margin-left: auto;
+   margin-right: auto;
+   margin-bottom: 10px;
+   width: 3vw;  
 }
 
 h1 {
