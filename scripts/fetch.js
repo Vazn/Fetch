@@ -1,4 +1,3 @@
-
 //== Build url for the request //== Full Error handling ==//
 function buildUrl() {
    const apiRoot = "https://www.prevision-meteo.ch/services/json/";

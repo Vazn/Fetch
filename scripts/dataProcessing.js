@@ -42,8 +42,7 @@ function getWantedData(data) {
    
    return wantedData;
 }
-
-//== Sec processing function that display data
+//== Second processing function that display data
 function displayData(data) {              
    let day = 0;
    for (let obj in data) {

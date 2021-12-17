@@ -6,7 +6,6 @@ function styleElements(element, styleObj) {
       }
    }
 }
-
 function createAndStyleElements(tag, textContent = "", attributes = [], styleObj = {}) {
    let element = document.createElement(tag);
    if (textContent !== "") {
